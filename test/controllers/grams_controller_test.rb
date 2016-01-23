@@ -2,8 +2,13 @@ require 'test_helper'
 
 class GramsControllerTest < ActionController::TestCase
   
-  test "getting the root page" do
+  test "should get root" do
     get :index
+    assert_response :success
+  end
+  
+  test "should get new" do
+    get :new
     assert_response :success
   end
   
