@@ -12,4 +12,18 @@ class GramsControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  test "should create a gram" do
+    get :new
+    assert_template 'grams/new'
+    
+    assert_difference 'Gram.count', 1 do
+      post :create, gram: { message: 'Hello!' }
+    end
+
+    assert_redirected_to root_path
+    
+    gram = Gram.last
+    assert_equal 'Hello!', gram.message
+  end
+  
 end
