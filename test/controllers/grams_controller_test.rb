@@ -52,9 +52,47 @@ class GramsControllerTest < ActionController::TestCase
     assert_template 'grams/show'
   end
   
-  test "should return 404 if gram not found" do
+  test "should return 404 for show if gram not found" do
     get :show, id: 'TACOCAT'
     assert_response :not_found
+  end
+  
+  test "should show edit if gram found" do
+    gram = grams(:gram_1)
+    get :edit, id: gram
+    assert_response :success
+    assert_template 'grams/edit'
+  end
+  
+  test "should return 404 for edit if gram not found" do
+    get :edit, id: 'TACOCAT'
+    assert_response :not_found
+  end
+  
+  test "should update a gram" do
+    gram = grams(:gram_1)
+    
+    patch :update, id: gram, gram: { message: 'Changed' }
+    
+    assert_redirected_to root_path
+    gram.reload
+    assert_equal 'Changed', gram.message
+  end
+  
+  test "should return 404 for update if gram not found" do
+    patch :update, id: 'TACOCAT', gram: { message: 'Changed' }
+    assert_response :not_found
+  end
+  
+  test "should render edit for invalid update" do
+    gram = grams(:gram_1)
+    
+    patch :update, id: gram, gram: { message: '' }
+    assert_template 'grams/edit'
+    assert_response :unprocessable_entity
+    
+    gram.reload
+    assert_equal 'Hello', gram.message
   end
   
   test "should reject invalid grams" do
