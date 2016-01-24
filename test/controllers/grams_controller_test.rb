@@ -45,6 +45,18 @@ class GramsControllerTest < ActionController::TestCase
     assert_equal user, gram.user
   end
   
+  test "should show gram if found" do
+    gram = grams(:gram_1)
+    get :show, id: gram
+    assert_response :success
+    assert_template 'grams/show'
+  end
+  
+  test "should return 404 if gram not found" do
+    get :show, id: 'TACOCAT'
+    assert_response :not_found
+  end
+  
   test "should reject invalid grams" do
     sign_in users(:justin)
     
