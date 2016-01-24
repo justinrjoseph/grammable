@@ -95,6 +95,24 @@ class GramsControllerTest < ActionController::TestCase
     assert_equal 'Hello', gram.message
   end
   
+  test "should destroy a gram" do
+    gram = grams(:gram_1)
+    
+    assert_difference 'Gram.count', -1 do
+      delete :destroy, id: gram
+    end
+    
+    assert_redirected_to root_path
+    
+    gram = Gram.find_by_id(gram)
+    assert_nil gram
+  end
+  
+  test "should return 404 for destroy if gram not found" do
+    delete :destroy, id: 'TACOCAT'
+    assert_response :not_found
+  end
+  
   test "should reject invalid grams" do
     sign_in users(:justin)
     
