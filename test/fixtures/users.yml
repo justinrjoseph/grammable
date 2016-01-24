@@ -5,8 +5,9 @@
 # below each fixture, per the syntax in the comments below
 #
 justin:
-  email: test@example.com
+  email: justin@example.com
   encrypted_password: secretpassword
-#
-# two: {}
-#  column: value
+
+christine:
+  email: christine@example.com
+  encrypted_password: secretpassword

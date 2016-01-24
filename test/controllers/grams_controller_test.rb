@@ -28,7 +28,6 @@ class GramsControllerTest < ActionController::TestCase
   
   test "should create a gram" do
     user = users(:justin)
-    
     sign_in user
     
     get :new
@@ -53,24 +52,49 @@ class GramsControllerTest < ActionController::TestCase
   end
   
   test "should return 404 for show if gram not found" do
+    user = users(:justin)
+    sign_in user
+    
     get :show, id: 'TACOCAT'
     assert_response :not_found
   end
   
   test "should show edit if gram found" do
     gram = grams(:gram_1)
+    sign_in gram.user
+    
     get :edit, id: gram
     assert_response :success
     assert_template 'grams/edit'
   end
   
   test "should return 404 for edit if gram not found" do
+    user = users(:justin)
+    sign_in user
+    
     get :edit, id: 'TACOCAT'
     assert_response :not_found
   end
   
+  test "should redirect edit when not logged in" do
+    gram = grams(:gram_1)
+    
+    get :edit, id: gram
+    assert_redirected_to new_user_session_path
+  end
+  
+  test "should redirect edit when not owner of gram" do
+    gram = grams(:gram_1)
+    user = users(:christine)
+    sign_in user
+    
+    get :edit, id: gram
+    assert_response :forbidden
+  end
+  
   test "should update a gram" do
     gram = grams(:gram_1)
+    sign_in gram.user
     
     patch :update, id: gram, gram: { message: 'Changed' }
     
@@ -80,12 +104,16 @@ class GramsControllerTest < ActionController::TestCase
   end
   
   test "should return 404 for update if gram not found" do
+    user = users(:justin)
+    sign_in user
+    
     patch :update, id: 'TACOCAT', gram: { message: 'Changed' }
     assert_response :not_found
   end
   
   test "should render edit for invalid update" do
     gram = grams(:gram_1)
+    sign_in gram.user
     
     patch :update, id: gram, gram: { message: '' }
     assert_template 'grams/edit'
@@ -95,8 +123,25 @@ class GramsControllerTest < ActionController::TestCase
     assert_equal 'Hello', gram.message
   end
   
+  test "should redirect update when not logged in" do
+    gram = grams(:gram_1)
+    
+    patch :update, id: gram, gram: { message: "Updated!" }
+    assert_redirected_to new_user_session_path
+  end
+  
+  test "should redirect update when not owner of gram" do
+    gram = grams(:gram_1)
+    user = users(:christine)
+    sign_in user
+    
+    patch :update, id: gram, gram: { message: 'Wahoo!' }
+    assert_response :forbidden
+  end
+  
   test "should destroy a gram" do
     gram = grams(:gram_1)
+    sign_in gram.user
     
     assert_difference 'Gram.count', -1 do
       delete :destroy, id: gram
@@ -109,8 +154,26 @@ class GramsControllerTest < ActionController::TestCase
   end
   
   test "should return 404 for destroy if gram not found" do
+    user = users(:justin)
+    sign_in user
+    
     delete :destroy, id: 'TACOCAT'
     assert_response :not_found
+  end
+  
+  test "should redirect destroy when not logged in" do
+    gram = grams(:gram_1)
+    delete :destroy, id: gram
+    assert_redirected_to new_user_session_path
+  end
+  
+  test "should redirect destroy when not owner of gram" do
+    gram = grams(:gram_1)
+    user = users(:christine)
+    sign_in user
+    
+    delete :destroy, id: gram
+    assert_response :forbidden
   end
   
   test "should reject invalid grams" do
