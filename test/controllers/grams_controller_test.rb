@@ -26,4 +26,13 @@ class GramsControllerTest < ActionController::TestCase
     assert_equal 'Hello!', gram.message
   end
   
+  test "should reject invalid grams" do
+    assert_no_difference 'Gram.count' do
+      post :create, gram: { message: '' }
+    end
+
+    assert_template 'grams/new'
+    assert_response :unprocessable_entity
+  end
+  
 end
