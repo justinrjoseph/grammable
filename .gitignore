@@ -16,3 +16,4 @@
 /config/application.yml
 /spring-1000
 /public/uploads
+/test/fixtures/*.jpg
