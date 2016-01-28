@@ -3,6 +3,7 @@ require 'test_helper'
 class GramsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
   include Warden::Test::Helpers
+  include ActionDispatch::TestProcess
   Warden.test_mode!
   
   test "should get root" do
@@ -34,7 +35,7 @@ class GramsControllerTest < ActionController::TestCase
     assert_template 'grams/new'
     
     assert_difference 'Gram.count', 1 do
-      post :create, gram: { message: 'Hello!' }
+      post :create, gram: { message: 'Hello!', picture: fixture_file_upload('/test-picture.jpg', 'image/jpg') }
     end
 
     assert_redirected_to root_path
@@ -96,7 +97,7 @@ class GramsControllerTest < ActionController::TestCase
     gram = grams(:gram_1)
     sign_in gram.user
     
-    patch :update, id: gram, gram: { message: 'Changed' }
+    patch :update, id: gram, gram: { message: 'Changed', picture: fixture_file_upload('/test-picture.jpg', 'image/jpg') }
     
     assert_redirected_to root_path
     gram.reload

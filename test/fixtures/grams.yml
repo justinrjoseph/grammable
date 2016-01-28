@@ -6,6 +6,7 @@
 #
 gram_1:
   message: "Hello"
+  picture: fixture_file_upload(Rails.root.join('test', 'fixtures', 'images', 'test-picture.png'), 'image/jpg')
   user: justin
 #
 # two: {}
