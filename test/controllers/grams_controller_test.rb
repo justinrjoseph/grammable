@@ -100,6 +100,7 @@ class GramsControllerTest < ActionController::TestCase
     patch :update, id: gram, gram: { message: 'Changed', picture: fixture_file_upload('/test-picture.jpg', 'image/jpg') }
     
     assert_redirected_to root_path
+    
     gram.reload
     assert_equal 'Changed', gram.message
   end
