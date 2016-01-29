@@ -11,11 +11,18 @@ body {
 
 .top-nav {
   background-color: $nav-and-btn-color;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: #edeeee;
+  border-bottom: 1px solid #edeeee;
   height: 70px;
   padding-top: 15px;
+  .add-post {
+    margin-top: 10px;
+    a {
+      font-weight: bold;
+      color: #125688;
+      font-size: 16px;
+      padding-left: 8px;
+    }
+  }
 }
 
 .top-nav:after,
@@ -25,16 +32,6 @@ body {
 	height: 0;
 	clear: both;
 	visibility: hidden;
-}
-
-.top-nav .add {
-  margin-top: 10px;
-  a {
-    font-weight: bold;
-    color: #125688;
-    font-size: 16px;
-    padding-left: 8px;
-  }
 }
 
 .brand {
@@ -50,15 +47,13 @@ body {
   border: 1px solid #e8e8e8;
   padding: 10px;
   margin-top: 40px;
-  padding: 0;
+  &.form {
+    padding: 20px;
+  }
   p, .message {
     font-size: 18px;
     margin: 20px; 
   }
-}
-
-.card.form {
-  padding: 20px;
 }
 
 .handle {
@@ -75,6 +70,14 @@ label {
 input {
   font-size: 18px;
   font-weight: 400;
+  &.boolean {
+    margin-left: 18px;
+    margin-top: 5px;
+    label {
+      margin-top: 5px;
+      line-height: 44px;      
+    }
+  }
 }
 
 .grammable-btn {
@@ -84,16 +87,6 @@ input {
   font-size: 24px;
   color: $nav-and-btn-color;
   margin-top: 10px;
-}
-
-.input.boolean {
-  margin-left: 18px;
-  margin-top: 5px;
-}
-
-.input.boolean label {
-  margin-top: 5px;
-  line-height: 44px;
 }
 
 .gram-actions a {
@@ -123,4 +116,38 @@ input {
 
 .gram-image {
   margin: 0 auto;
+}
+
+#user_remember_me {
+  bottom: -7px;
+}
+
+@media ( max-width: 500px ) {
+  #user_remember_me {
+    left: 10px;
+  }
+}
+
+@media ( min-width: 501px ) {
+  #user_remember_me {
+    left: -25px;
+  }
+}
+
+@media ( min-width: 601px ) {
+  #user_remember_me {
+    left: -60px;
+  }
+}
+
+@media ( min-width: 701px ) {
+  #user_remember_me {
+    left: -70px;
+  }
+}
+
+@media ( min-width: 1201px ) {
+  #user_remember_me {
+    left: -120px;
+  }
 }
